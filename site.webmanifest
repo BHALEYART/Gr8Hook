@@ -1,0 +1,12 @@
+{
+  "name": "Gr8 Hook",
+  "short_name": "Gr8 Hook",
+  "icons": [
+    { "src": "/assets/favicon.svg", "sizes": "any", "type": "image/svg+xml" },
+    { "src": "/assets/apple-touch-icon.png", "sizes": "180x180", "type": "image/png" },
+    { "src": "/assets/logo.png", "sizes": "512x512", "type": "image/png" }
+  ],
+  "theme_color": "#0F1B2D",
+  "background_color": "#0F1B2D",
+  "display": "browser"
+}
