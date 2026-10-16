@@ -223,9 +223,13 @@ p { margin: 0 0 1em; }
 .work-item:hover .photo-ph { transform: scale(.985); }
 .work-img { display: block; width: 100%; height: auto; aspect-ratio: 16 / 11; object-fit: cover; border-radius: var(--radius); margin-bottom: 18px; transition: transform .3s, box-shadow .3s; }
 .work-item:hover .work-img { transform: translateY(-4px); box-shadow: 0 26px 50px -28px rgba(15,27,45,.5); }
-.hero--work { background: linear-gradient(90deg, rgba(15,27,45,.96) 0%, rgba(15,27,45,.88) 38%, rgba(15,27,45,.35) 70%, rgba(15,27,45,.15) 100%), url("../assets/img/work/studio-banner.webp") right center / cover no-repeat, var(--navy); }
-.hero--work::before { display: none; }
-@media (max-width: 860px) { .hero--work { background: linear-gradient(180deg, rgba(15,27,45,.78), rgba(15,27,45,.94)), url("../assets/img/work/studio-banner.webp") 70% center / cover no-repeat, var(--navy); } }
+/* Page banners: art already fades to navy on the left, so the scrim stays light */
+.hero--img { background: linear-gradient(90deg, rgba(15,27,45,.95) 0%, rgba(15,27,45,.8) 38%, rgba(15,27,45,.15) 62%, rgba(15,27,45,0) 100%), var(--banner) right center / auto 100% no-repeat, var(--navy); }
+.hero--img::before { display: none; }
+@media (max-width: 860px) { .hero--img { background: linear-gradient(180deg, rgba(15,27,45,.78), rgba(15,27,45,.94)), var(--banner) 72% center / cover no-repeat, var(--navy); } }
+.hero--about, .hero--work { --banner: url("../assets/img/banners/about.webp"); }
+.hero--pricing { --banner: url("../assets/img/banners/pricing.webp"); }
+.hero--services { --banner: url("../assets/img/banners/services.webp"); }
 .work-item h3 { font-size: 24px; text-transform: uppercase; margin-bottom: 6px; }
 .work-item p { color: var(--slate); margin: 0; }
 .work-meta { font-family: var(--head); font-size: 12px; letter-spacing: .18em; text-transform: uppercase; color: var(--coral); margin-bottom: 8px; }
@@ -618,3 +622,4 @@ fieldset.field { border: 0; padding: 0; margin: 0 0 18px; }
   .slider-dots { gap: 2px; margin: 0 2px; }
   .slider-dot { width: 24px; }
 }
+@media (min-width: 861px) { .hero--img .display, .hero--img .lead { max-width: min(640px, 50vw); } }
