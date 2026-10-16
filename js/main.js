@@ -97,6 +97,9 @@
         if (!cb.checked) cb.closest('label').classList.remove('is-included');
       });
     });
+    // Pre-check a service from links like /contact/?service=consulting
+    var wantedService = (new URLSearchParams(location.search).get('service') || '').toLowerCase();
+    checks.forEach(function (cb) { if (wantedService && cb.getAttribute('data-service') === wantedService) cb.checked = true; });
     // Pre-select from links like /contact/?package=pro
     var wanted = (new URLSearchParams(location.search).get('package') || '').toLowerCase();
     radios.forEach(function (r) {

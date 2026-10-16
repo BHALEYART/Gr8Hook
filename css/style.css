@@ -496,6 +496,12 @@ fieldset.field { border: 0; padding: 0; margin: 0 0 18px; }
 .price-tiers dt { font-weight: 700; }
 .price-tiers dd { margin: 0; color: var(--slate); white-space: nowrap; }
 .fine a { color: var(--coral); }
+.price--wide { grid-column: 1 / -1; display: grid; grid-template-columns: 1fr 1.3fr auto; gap: 18px 40px; align-items: center; }
+.price--wide ul { margin: 0; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 4px 24px; }
+.price--wide .btn { margin-top: 0; align-self: center; }
+.price-per { font-size: 18px; font-weight: 600; color: var(--slate); margin-left: 2px; }
+@media (max-width: 860px) { .price--wide { grid-template-columns: 1fr; } .price--wide .btn { align-self: flex-start; } }
+@media (max-width: 620px) { .price--wide ul { grid-template-columns: 1fr; } }
 
 /* Coming-soon page */
 .soon { min-height: calc(100vh - 78px); display: flex; align-items: center; }
