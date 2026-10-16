@@ -160,6 +160,7 @@
 <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
+<a class="skip-link" href="#main">Skip to main content</a>
 
 <header class="site-header">
   <div class="container">
@@ -183,7 +184,7 @@
   </div>
 </header>
 
-<main>
+<main id="main" tabindex="-1">
 
   <section class="hero dark">
     <svg class="hero-mark" viewBox="0 0 100 140" fill="none" aria-hidden="true"><circle cx="50" cy="17" r="10" stroke="#FFFFFF" stroke-width="6"/><circle cx="50" cy="40" r="13" stroke="#FFFFFF" stroke-width="6"/><path d="M50 53 L50 100 A22 22 0 0 1 6 100 L6 80 L17 90" stroke="#FFFFFF" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/></svg>
@@ -200,11 +201,12 @@
     </div>
   </section>
 
-  <div class="strip" aria-hidden="true">
-    <div class="strip-track">
+  <div class="strip" data-strip>
+    <div class="strip-track" aria-hidden="true">
       <span>Ad Strategy</span><span>Paid Ads</span><span>Performance Optimization</span><span>Content Creation</span><span>Web Design &amp; SEO</span><span>Email &amp; SMS</span><span>CRM Automation</span><span>Ad Attribution</span>
       <span>Ad Strategy</span><span>Paid Ads</span><span>Performance Optimization</span><span>Content Creation</span><span>Web Design &amp; SEO</span><span>Email &amp; SMS</span><span>CRM Automation</span><span>Ad Attribution</span>
     </div>
+    <button class="strip-toggle" type="button" data-strip-toggle aria-pressed="false" aria-label="Pause scrolling text"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><rect x="6" y="5" width="4" height="14" rx="1"/><rect x="14" y="5" width="4" height="14" rx="1"/></svg></button>
   </div>
 
   <section class="showcase dark" aria-label="What we do for local businesses">
@@ -366,6 +368,7 @@
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 18l-6-6 6-6"/></svg>
           </button>
           <div class="slider-dots"></div>
+          <button class="slider-btn slider-toggle" type="button" data-toggle aria-pressed="false" aria-label="Pause slideshow"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><rect x="6" y="5" width="4" height="14" rx="1"/><rect x="14" y="5" width="4" height="14" rx="1"/></svg></button>
           <button class="slider-btn" type="button" data-next aria-label="Next slide">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 18l6-6-6-6"/></svg>
           </button>
@@ -603,7 +606,7 @@
         </div>
       </div>
       <div>
-        <h4>Company</h4>
+        <h2 class="ft-h">Company</h2>
         <ul>
           <li><a href="about/">About</a></li>
           <li><a href="work/">Work</a></li>
@@ -611,10 +614,11 @@
           <li><a href="dashboard/">Client Dashboard</a></li>
           <li><a href="contact/">Contact</a></li>
           <li><a href="privacy/">Privacy Policy</a></li>
+          <li><a href="accessibility/">Accessibility</a></li>
         </ul>
       </div>
       <div>
-        <h4>Services</h4>
+        <h2 class="ft-h">Services</h2>
         <ul>
           <li><a href="services/#paid-ads">Paid Ads</a></li>
           <li><a href="services/#social-media">Social Media</a></li>
@@ -624,7 +628,7 @@
         </ul>
       </div>
       <div>
-        <h4>Contact</h4>
+        <h2 class="ft-h">Contact</h2>
         <ul>
           <li><a href="mailto:hello@gr8hook.com">hello@gr8hook.com</a></li>
           <li><a href="tel:+10000000000">[Your phone]</a></li>
@@ -634,7 +638,7 @@
     </div>
     <div class="footer-bottom">
       <span>&copy; <span id="year">2026</span> Gr8 Hook. All rights reserved.</span>
-      <a href="privacy/">Privacy Policy</a>
+      <span><a href="privacy/">Privacy Policy</a> · <a href="accessibility/">Accessibility</a></span>
     </div>
   </div>
 </footer>

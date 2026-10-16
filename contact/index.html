@@ -177,6 +177,7 @@
 <link rel="stylesheet" href="../css/style.css">
 </head>
 <body>
+<a class="skip-link" href="#main">Skip to main content</a>
 
 <header class="site-header">
   <div class="container">
@@ -200,7 +201,7 @@
   </div>
 </header>
 
-<main>
+<main id="main" tabindex="-1">
 
   <section class="section dark">
     <div class="container contact-grid">
@@ -225,9 +226,10 @@
       </div>
 
       <form class="form" action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
+        <p class="form-note" style="text-align:left;margin:0 0 16px">Fields marked <span class="req" aria-hidden="true">*</span><span class="sr-only">with an asterisk</span> are required.</p>
         <div class="form-row">
           <div class="field">
-            <label for="name">Name</label>
+            <label for="name">Name <span class="req" aria-hidden="true">*</span></label>
             <input id="name" name="name" type="text" autocomplete="name" required>
           </div>
           <div class="field">
@@ -237,7 +239,7 @@
         </div>
         <div class="form-row">
           <div class="field">
-            <label for="email">Email</label>
+            <label for="email">Email <span class="req" aria-hidden="true">*</span></label>
             <input id="email" name="email" type="email" autocomplete="email" required>
           </div>
           <div class="field">
@@ -319,7 +321,7 @@
         </div>
       </div>
       <div>
-        <h4>Company</h4>
+        <h2 class="ft-h">Company</h2>
         <ul>
           <li><a href="../about/">About</a></li>
           <li><a href="../work/">Work</a></li>
@@ -327,10 +329,11 @@
           <li><a href="../dashboard/">Client Dashboard</a></li>
           <li><a href="../contact/">Contact</a></li>
           <li><a href="../privacy/">Privacy Policy</a></li>
+          <li><a href="../accessibility/">Accessibility</a></li>
         </ul>
       </div>
       <div>
-        <h4>Services</h4>
+        <h2 class="ft-h">Services</h2>
         <ul>
           <li><a href="../services/#paid-ads">Paid Ads</a></li>
           <li><a href="../services/#social-media">Social Media</a></li>
@@ -340,7 +343,7 @@
         </ul>
       </div>
       <div>
-        <h4>Contact</h4>
+        <h2 class="ft-h">Contact</h2>
         <ul>
           <li><a href="mailto:hello@gr8hook.com">hello@gr8hook.com</a></li>
           <li><a href="tel:+10000000000">[Your phone]</a></li>
@@ -350,7 +353,7 @@
     </div>
     <div class="footer-bottom">
       <span>&copy; <span id="year">2026</span> Gr8 Hook. All rights reserved.</span>
-      <a href="../privacy/">Privacy Policy</a>
+      <span><a href="../privacy/">Privacy Policy</a> · <a href="../accessibility/">Accessibility</a></span>
     </div>
   </div>
 </footer>

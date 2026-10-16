@@ -29,6 +29,9 @@
     items.forEach(function (el) { el.classList.add('is-in'); });
   }
 
+  var PAUSE_ICON = '<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><rect x="6" y="5" width="4" height="14" rx="1"/><rect x="14" y="5" width="4" height="14" rx="1"/></svg>';
+  var PLAY_ICON = '<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>';
+
   // Ad showcase slider
   document.querySelectorAll('[data-slider]').forEach(function (slider) {
     var slides = slider.querySelectorAll('.slide');
@@ -53,7 +56,8 @@
       });
       dots.forEach(function (d, k) { d.setAttribute('aria-current', k === i ? 'true' : 'false'); });
     }
-    function start() { if (!reduce && !timer) timer = setInterval(function () { go(i + 1); }, DELAY); }
+    var paused = reduce;
+    function start() { if (!paused && !timer) timer = setInterval(function () { go(i + 1); }, DELAY); }
     function stop() { clearInterval(timer); timer = null; }
     function restart() { stop(); start(); }
     slider.querySelector('[data-prev]').addEventListener('click', function () { go(i - 1); restart(); });
@@ -62,8 +66,29 @@
     slider.addEventListener('mouseleave', start);
     slider.addEventListener('focusin', stop);
     slider.addEventListener('focusout', start);
+    var toggle = slider.querySelector('[data-toggle]');
+    function syncToggle() {
+      if (!toggle) return;
+      toggle.setAttribute('aria-pressed', paused ? 'true' : 'false');
+      toggle.setAttribute('aria-label', paused ? 'Play slideshow' : 'Pause slideshow');
+      toggle.innerHTML = paused ? PLAY_ICON : PAUSE_ICON;
+    }
+    if (toggle) toggle.addEventListener('click', function () { paused = !paused; if (paused) stop(); else start(); syncToggle(); });
     go(0);
+    syncToggle();
     start();
+  });
+
+  // Scrolling services strip: pause button
+  document.querySelectorAll('[data-strip]').forEach(function (strip) {
+    var btn = strip.querySelector('[data-strip-toggle]');
+    if (!btn) return;
+    btn.addEventListener('click', function () {
+      var on = strip.classList.toggle('is-paused');
+      btn.setAttribute('aria-pressed', on ? 'true' : 'false');
+      btn.setAttribute('aria-label', on ? 'Play scrolling text' : 'Pause scrolling text');
+      btn.innerHTML = on ? PLAY_ICON : PAUSE_ICON;
+    });
   });
 
   // Contact form: picking a package checks and highlights the services it includes
