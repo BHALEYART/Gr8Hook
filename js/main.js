@@ -66,6 +66,44 @@
     start();
   });
 
+  // Contact form: picking a package checks and highlights the services it includes
+  var pick = document.querySelector('[data-package-pick]');
+  var checks = document.querySelectorAll('[data-service-checks] input[type="checkbox"]');
+  var hint = document.querySelector('[data-package-hint]');
+  if (pick && checks.length) {
+    var radios = pick.querySelectorAll('input[type="radio"]');
+    var applyPackage = function (radio) {
+      var included = (radio.getAttribute('data-services') || '').split(' ').filter(Boolean);
+      checks.forEach(function (cb) {
+        var on = included.indexOf(cb.getAttribute('data-service')) !== -1;
+        var label = cb.closest('label');
+        if (on) {
+          if (!cb.checked) { cb.checked = true; cb.setAttribute('data-auto', ''); }
+        } else if (cb.hasAttribute('data-auto')) {
+          cb.checked = false; cb.removeAttribute('data-auto');
+        }
+        label.classList.toggle('is-included', on && cb.checked);
+      });
+      if (hint) {
+        hint.textContent = included.length
+          ? radio.value + ' includes the ' + included.length + ' highlighted services below. Add anything else you need.'
+          : '';
+      }
+    };
+    radios.forEach(function (r) { r.addEventListener('change', function () { applyPackage(r); }); });
+    checks.forEach(function (cb) {
+      cb.addEventListener('change', function () {
+        cb.removeAttribute('data-auto'); // it's the visitor's choice now
+        if (!cb.checked) cb.closest('label').classList.remove('is-included');
+      });
+    });
+    // Pre-select from links like /contact/?package=pro
+    var wanted = (new URLSearchParams(location.search).get('package') || '').toLowerCase();
+    radios.forEach(function (r) {
+      if (wanted && r.value.toLowerCase() === wanted) { r.checked = true; applyPackage(r); }
+    });
+  }
+
   // Footer year
   var y = document.getElementById('year');
   if (y) y.textContent = new Date().getFullYear();

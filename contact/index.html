@@ -246,16 +246,28 @@
           </div>
         </div>
         <fieldset class="field">
+          <legend>Interested in a package?</legend>
+          <div class="pkg-pick" data-package-pick>
+            <label><input type="radio" name="package" value="Startup" data-services="ads seo web design tracking"><span><b>Startup</b><small>$1,199/mo</small></span></label>
+            <label><input type="radio" name="package" value="Basic" data-services="ads seo content design tracking"><span><b>Basic</b><small>$1,299/mo</small></span></label>
+            <label class="pkg-pick--pro"><input type="radio" name="package" value="Pro" data-services="ads seo web content design social tracking"><span><b>Pro</b><small>$1,997/mo · Most popular</small></span></label>
+            <label><input type="radio" name="package" value="Elite" data-services="ads seo web content design social email crm tracking"><span><b>Elite</b><small>$3,997/mo</small></span></label>
+            <label class="pkg-pick--none"><input type="radio" name="package" value="Not sure yet" data-services="" checked><span><b>Not sure yet</b><small>Help me choose</small></span></label>
+          </div>
+          <p class="form-note pkg-hint" data-package-hint aria-live="polite"></p>
+        </fieldset>
+        <fieldset class="field">
           <legend>What can we help with?</legend>
-          <div class="checks">
-            <label><input type="checkbox" name="services" value="Paid Ads"> Paid Ads</label>
-            <label><input type="checkbox" name="services" value="Social Media"> Social Media</label>
-            <label><input type="checkbox" name="services" value="Content Creation"> Content Creation</label>
-            <label><input type="checkbox" name="services" value="Web Design & SEO"> Web Design &amp; SEO</label>
-            <label><input type="checkbox" name="services" value="Email & SMS"> Email &amp; SMS</label>
-            <label><input type="checkbox" name="services" value="CRM & Automation"> CRM &amp; Automation</label>
-            <label><input type="checkbox" name="services" value="Graphic Design"> Graphic Design</label>
-            <label><input type="checkbox" name="services" value="Tracking Platform"> Tracking Platform</label>
+          <div class="checks" data-service-checks>
+            <label><input type="checkbox" name="services" value="Paid Ads" data-service="ads"> Paid Ads</label>
+            <label><input type="checkbox" name="services" value="Social Media" data-service="social"> Social Media</label>
+            <label><input type="checkbox" name="services" value="Content Creation" data-service="content"> Content Creation</label>
+            <label><input type="checkbox" name="services" value="Web Design" data-service="web"> Web Design</label>
+            <label><input type="checkbox" name="services" value="SEO & AI Search" data-service="seo"> SEO &amp; AI Search</label>
+            <label><input type="checkbox" name="services" value="Email & SMS" data-service="email"> Email &amp; SMS</label>
+            <label><input type="checkbox" name="services" value="CRM & Automation" data-service="crm"> CRM &amp; Automation</label>
+            <label><input type="checkbox" name="services" value="Graphic Design" data-service="design"> Graphic Design</label>
+            <label><input type="checkbox" name="services" value="Tracking Platform" data-service="tracking"> Tracking Platform</label>
           </div>
         </fieldset>
         <div class="field">
