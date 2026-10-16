@@ -426,7 +426,16 @@ fieldset.field { border: 0; padding: 0; margin: 0 0 18px; }
   .hs-title { font-size: clamp(30px, 8.4vw, 44px); margin-bottom: 12px; }
   .hs-scrim--left { display: none; }
   .ov:not(.ov--key) { display: none; }
-  .ov--key:not(.ov-roas) { font-size: 1.55em; left: var(--mx, var(--x)); top: var(--my, var(--y)); }
+  /* Phones: fixed readable size, pinned inside the picture's bottom-left corner so nothing clips */
+  .hs-stage { font-size: 10px; }
+  .ov--key { left: 12px; right: auto; top: auto; bottom: 12px; max-width: calc(100% - 24px); }
+  .ov--key.ov-note { white-space: normal; }
+  .ov--key.ov-result { width: auto; }
+  /* The ROAS chart sits inside the card drawn in the artwork, so it keeps that spot and drops the small print */
+  .ov--key.ov-roas { left: var(--x); top: var(--y); bottom: auto; width: var(--w); height: var(--h); max-width: none; padding: .7em .9em 0; }
+  .ov-roas .ov-roas-top small, .ov-roas .ov-pill, .ov-roas .ov-months { display: none; }
+  .ov-roas .ov-roas-top b { font-size: 2em; }
+  .ov-roas .ov-bars { gap: .4em; margin-top: .4em; }
   .hs-stage { border-radius: 16px; }
 }
 
