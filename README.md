@@ -29,7 +29,6 @@ Search the project for `[` to find them all:
 - Stats on the home page (`[XX]+` etc.)
 - Home page ad slider: replace each `[Ad example photo N]` label with an `<img>` (e.g. `assets/ads/ad-1.jpg`)
 - Testimonials, project images and case studies
-- Photo of Brandon (home + about)
 - Phone number, city/state
 - Social links (`href="#"` in the footer)
 - Contact form: replace `YOUR_FORM_ID` in `contact/index.html` with a Formspree form ID (or point it at a GoHighLevel form)
