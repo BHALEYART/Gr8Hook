@@ -34,7 +34,7 @@
     var slides = slider.querySelectorAll('.slide');
     var dotsWrap = slider.querySelector('.slider-dots');
     var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    var i = 0, timer = null, DELAY = 5000;
+    var i = 0, timer = null, DELAY = 6500;
     var dots = [];
     slides.forEach(function (s, n) {
       var d = document.createElement('button');
