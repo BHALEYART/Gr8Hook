@@ -626,3 +626,5 @@ fieldset.field { border: 0; padding: 0; margin: 0 0 18px; }
 /* Services page: who-we-work-with reel runs the opposite way so it reads as its own band */
 .strip--uses .strip-track { animation-direction: reverse; animation-duration: 48s; }
 .work-img--top { object-position: left top; }
+.work-video { object-fit: contain; background: #000; }
+.work-item:hover .work-video { transform: none; }
