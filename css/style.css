@@ -680,3 +680,14 @@ fieldset.field { border: 0; padding: 0; margin: 0 0 18px; }
 .short p { color: var(--slate); margin: 0; }
 @media (max-width: 860px) { .shorts { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
 @media (max-width: 560px) { .shorts { grid-template-columns: minmax(0, 1fr); max-width: 360px; margin: 0 auto; } }
+
+/* "See examples" internal links */
+.see-ex { display: inline-flex; align-items: center; gap: 6px; margin-top: 16px; font-family: var(--head); font-size: 13px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--coral-ink); text-decoration: none; }
+.see-ex svg { width: 16px; height: 16px; transition: transform .2s; }
+.see-ex:hover { text-decoration: underline; }
+.see-ex:hover svg { transform: translateX(3px); }
+.svc .see-ex { display: flex; width: max-content; }
+.price .see-ex { align-self: flex-start; margin: auto 0 14px; }
+.price .see-ex + .btn { margin-top: 0; }
+.price--feature .see-ex, .dark .see-ex { color: var(--coral); }
+.work-item[id], #shorts { scroll-margin-top: 100px; }
