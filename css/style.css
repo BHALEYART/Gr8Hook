@@ -629,3 +629,5 @@ fieldset.field { border: 0; padding: 0; margin: 0 0 18px; }
 .work-video { object-fit: contain; background: #000; }
 .work-item:hover .work-video { transform: none; }
 #quote { scroll-margin-top: 100px; }
+.quote footer a { color: var(--coral-ink); text-decoration: none; }
+.quote footer a:hover { text-decoration: underline; }
