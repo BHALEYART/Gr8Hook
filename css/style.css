@@ -672,3 +672,11 @@ fieldset.field { border: 0; padding: 0; margin: 0 0 18px; }
 @keyframes hbIn { from { opacity: 0; transform: translateY(14px) scale(.96); } to { opacity: 1; transform: none; } }
 @keyframes hbFloat { from { transform: translateY(0); } to { transform: translateY(-8px); } }
 @media (prefers-reduced-motion: reduce) { .hb { animation: none !important; opacity: 1 !important; } }
+
+/* Work page: vertical short-form videos */
+.shorts { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 28px; }
+.short-video { display: block; width: 100%; height: auto; aspect-ratio: 9 / 16; object-fit: cover; background: #000; border-radius: var(--radius); margin-bottom: 18px; box-shadow: 0 26px 50px -30px rgba(15,27,45,.55); }
+.short h3 { font-size: 22px; text-transform: uppercase; margin-bottom: 6px; }
+.short p { color: var(--slate); margin: 0; }
+@media (max-width: 860px) { .shorts { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 560px) { .shorts { grid-template-columns: minmax(0, 1fr); max-width: 360px; margin: 0 auto; } }
