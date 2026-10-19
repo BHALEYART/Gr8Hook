@@ -691,3 +691,12 @@ fieldset.field { border: 0; padding: 0; margin: 0 0 18px; }
 .price .see-ex + .btn { margin-top: 0; }
 .price--feature .see-ex, .dark .see-ex { color: var(--coral); }
 .work-item[id], #shorts { scroll-margin-top: 100px; }
+
+/* About: what makes us different */
+.diff-list { list-style: none; margin: 0; padding: 0; display: grid; gap: 18px; }
+.diff-list li { display: flex; gap: 18px; padding: 26px 26px 24px; border: 1px solid var(--line); border-radius: var(--radius); background: var(--white); }
+.diff-icon { flex: none; width: 48px; height: 48px; border-radius: 14px; display: flex; align-items: center; justify-content: center; background: rgba(255,90,54,.12); color: var(--coral-ink); }
+.diff-icon svg { width: 24px; height: 24px; }
+.diff-list h3 { font-size: 20px; margin: 4px 0 8px; }
+.diff-list p { color: var(--slate); margin: 0; }
+.diff-list .see-ex { margin-top: 12px; }
