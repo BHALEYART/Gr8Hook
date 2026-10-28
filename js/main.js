@@ -132,6 +132,14 @@
     });
   }
 
+  // Meta Pixel conversion events (only if the pixel loaded)
+  function track(event) { if (typeof window.fbq === 'function') window.fbq('track', event); }
+  var quoteForm = document.getElementById('quote');
+  if (quoteForm) quoteForm.addEventListener('submit', function () { track('Lead'); });
+  window.addEventListener('message', function (e) {
+    if (e.origin === 'https://calendly.com' && e.data && e.data.event === 'calendly.event_scheduled') track('Schedule');
+  });
+
   // Footer year
   var y = document.getElementById('year');
   if (y) y.textContent = new Date().getFullYear();
