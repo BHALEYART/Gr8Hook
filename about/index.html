@@ -31,13 +31,16 @@
     {
       "@type": "ProfessionalService",
       "@id": "https://gr8hook.com/#organization",
-      "sameAs": ["https://www.facebook.com/gr8hook", "https://www.instagram.com/gr8hook"],
+      "sameAs": [
+        "https://www.facebook.com/gr8hook",
+        "https://www.instagram.com/gr8hook"
+      ],
       "name": "Gr8 Hook",
       "alternateName": "Gr8 Hook Marketing",
       "url": "https://gr8hook.com/",
       "logo": "https://gr8hook.com/assets/logo.png",
       "image": "https://gr8hook.com/assets/og-image.png",
-      "description": "Strategy-driven marketing agency offering paid ads, performance optimization, content creation, web design with SEO and AI search, email and SMS, CRM automation, graphic design and ad-to-sales attribution tracking.",
+      "description": "Marketing agency offering paid advertising with attribution, an outsourced sales and lead generation team, and marketing analytics across ads, email, forms, calls and print, plus content creation, web design with SEO and AI search, email and SMS, CRM automation and print design. Every client gets a dedicated account manager, and pricing is by custom quote.",
       "email": "Sales@Gr8Hook.com",
       "address": {
         "@type": "PostalAddress",
@@ -53,24 +56,44 @@
       },
       "knowsAbout": [
         "Paid Advertising",
+        "Marketing Attribution",
+        "Lead Generation",
+        "Outsourced Sales",
+        "Marketing Analytics",
+        "Print Marketing Attribution",
         "Social Media Management",
         "Content Creation",
         "Web Design & SEO",
         "Email & SMS Marketing",
         "CRM Setup & Automation",
-        "Print & Design",
-        "Easy-2-Use Tracking Platform"
+        "Print & Design"
       ],
       "hasOfferCatalog": {
         "@type": "OfferCatalog",
-        "name": "Marketing services",
+        "name": "Marketing, sales and analytics services",
         "itemListElement": [
           {
             "@type": "Offer",
             "itemOffered": {
               "@type": "Service",
-              "name": "Paid Advertising",
-              "url": "https://gr8hook.com/services/#paid-ads"
+              "name": "Marketing & Paid Advertising",
+              "url": "https://gr8hook.com/marketing/"
+            }
+          },
+          {
+            "@type": "Offer",
+            "itemOffered": {
+              "@type": "Service",
+              "name": "Sales & Lead Generation",
+              "url": "https://gr8hook.com/sales/"
+            }
+          },
+          {
+            "@type": "Offer",
+            "itemOffered": {
+              "@type": "Service",
+              "name": "Analytics & Attribution",
+              "url": "https://gr8hook.com/analytics/"
             }
           },
           {
@@ -119,14 +142,6 @@
               "@type": "Service",
               "name": "Print & Design",
               "url": "https://gr8hook.com/services/#design"
-            }
-          },
-          {
-            "@type": "Offer",
-            "itemOffered": {
-              "@type": "Service",
-              "name": "Easy-2-Use Tracking Platform",
-              "url": "https://gr8hook.com/services/#tracking"
             }
           }
         ]
@@ -232,12 +247,13 @@ alt="" /></noscript>
     <nav class="nav" id="site-nav" aria-label="Main">
       <a href="../">Home</a>
       <a href="../about/" aria-current="page">About</a>
+      <a href="../marketing/">Marketing</a>
+      <a href="../sales/">Sales</a>
+      <a href="../analytics/">Analytics</a>
       <a href="../services/">Services</a>
-      <a href="../pricing/">Pricing</a>
       <a href="../work/">Work</a>
-      <a href="../dashboard/">Dashboard</a>
       <a href="../contact/">Contact</a>
-      <a class="btn btn--coral" href="../contact/#book">Book a Call</a>
+      <a class="btn btn--coral" href="../contact/#quote">Get a Quote</a>
     </nav>
   </div>
 </header>
@@ -324,7 +340,7 @@ alt="" /></noscript>
         <p>I saw what high-level strategy can do for a business. I also saw how easy it is for a client to become just another account number. Gr8 Hook brings that same experience to you in a smaller, more affordable package, with a real person on the other end who knows your business by name.</p>
         <div class="btn-row" style="margin-top: 28px">
           <a class="btn btn--coral" href="../contact/#book">Talk to Brandon</a>
-          <a class="btn btn--ghost" href="../pricing/">See Pricing</a>
+          <a class="btn btn--ghost btn--ghost-dark" href="../contact/#quote">Set Up a Quote</a>
         </div>
       </div>
       <ul class="diff-list">
@@ -332,7 +348,7 @@ alt="" /></noscript>
           <span class="diff-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></span>
           <div>
             <h3>You aren&rsquo;t just another client</h3>
-            <p>You work directly with me, not a rotating cast of account managers. I know your goals, your offers and your numbers, and you get straight answers when you call.</p>
+            <p>Every client gets a dedicated account manager: one consistent point of contact, not a rotating cast. We know your goals, your offers and your numbers, we set everything up for you, and you get straight answers when you call.</p>
           </div>
         </li>
         <li class="reveal">
@@ -345,9 +361,9 @@ alt="" /></noscript>
         <li class="reveal">
           <span class="diff-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 3v18h18"/><path d="M7 14l4-4 3 3 5-6"/></svg></span>
           <div>
-            <h3>Our own attribution technology</h3>
-            <p>We built our own client dashboard that pairs your Meta and Google ad spend with the leads, appointments and sales in your CRM, so you can see which campaigns are paying off instead of guessing.</p>
-            <a class="see-ex" href="../dashboard/">See the dashboard <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+            <h3>Results you can prove</h3>
+            <p>We built our own attribution tracking that pairs your ad spend, emails, forms, calls and even print pieces with the leads, appointments and sales they produce, so you can see what&rsquo;s paying off instead of guessing.</p>
+            <a class="see-ex" href="../analytics/">How our analytics work <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
           </div>
         </li>
       </ul>
@@ -387,8 +403,6 @@ alt="" /></noscript>
         <ul>
           <li><a href="../about/">About</a></li>
           <li><a href="../work/">Work</a></li>
-          <li><a href="../pricing/">Pricing</a></li>
-          <li><a href="../dashboard/">Client Dashboard</a></li>
           <li><a href="../contact/">Contact</a></li>
           <li><a href="../privacy/">Privacy Policy</a></li>
           <li><a href="../accessibility/">Accessibility</a></li>
@@ -397,11 +411,11 @@ alt="" /></noscript>
       <div>
         <h2 class="ft-h">Services</h2>
         <ul>
-          <li><a href="../services/#paid-ads">Paid Ads</a></li>
-          <li><a href="../services/#social-media">Social Media</a></li>
+          <li><a href="../marketing/">Marketing &amp; Ads</a></li>
+          <li><a href="../sales/">Sales &amp; Lead Generation</a></li>
+          <li><a href="../analytics/">Analytics &amp; Attribution</a></li>
           <li><a href="../services/#web-seo">Web Design &amp; SEO</a></li>
-          <li><a href="../services/#crm">CRM &amp; Automation</a></li>
-          <li><a href="../services/#tracking">Tracking Platform</a></li>
+          <li><a href="../services/">All Services</a></li>
         </ul>
       </div>
       <div>
@@ -409,6 +423,7 @@ alt="" /></noscript>
         <ul>
           <li><a href="mailto:Sales@Gr8Hook.com">Sales@Gr8Hook.com</a></li>
           <li>Michigan Based</li>
+          <li><a href="../contact/#quote">Get a quote</a></li>
           <li><a href="../contact/#book">Book a call</a></li>
         </ul>
       </div>

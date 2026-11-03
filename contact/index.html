@@ -31,13 +31,16 @@
     {
       "@type": "ProfessionalService",
       "@id": "https://gr8hook.com/#organization",
-      "sameAs": ["https://www.facebook.com/gr8hook", "https://www.instagram.com/gr8hook"],
+      "sameAs": [
+        "https://www.facebook.com/gr8hook",
+        "https://www.instagram.com/gr8hook"
+      ],
       "name": "Gr8 Hook",
       "alternateName": "Gr8 Hook Marketing",
       "url": "https://gr8hook.com/",
       "logo": "https://gr8hook.com/assets/logo.png",
       "image": "https://gr8hook.com/assets/og-image.png",
-      "description": "Strategy-driven marketing agency offering paid ads, performance optimization, content creation, web design with SEO and AI search, email and SMS, CRM automation, graphic design and ad-to-sales attribution tracking.",
+      "description": "Marketing agency offering paid advertising with attribution, an outsourced sales and lead generation team, and marketing analytics across ads, email, forms, calls and print, plus content creation, web design with SEO and AI search, email and SMS, CRM automation and print design. Every client gets a dedicated account manager, and pricing is by custom quote.",
       "email": "Sales@Gr8Hook.com",
       "address": {
         "@type": "PostalAddress",
@@ -53,24 +56,44 @@
       },
       "knowsAbout": [
         "Paid Advertising",
+        "Marketing Attribution",
+        "Lead Generation",
+        "Outsourced Sales",
+        "Marketing Analytics",
+        "Print Marketing Attribution",
         "Social Media Management",
         "Content Creation",
         "Web Design & SEO",
         "Email & SMS Marketing",
         "CRM Setup & Automation",
-        "Print & Design",
-        "Easy-2-Use Tracking Platform"
+        "Print & Design"
       ],
       "hasOfferCatalog": {
         "@type": "OfferCatalog",
-        "name": "Marketing services",
+        "name": "Marketing, sales and analytics services",
         "itemListElement": [
           {
             "@type": "Offer",
             "itemOffered": {
               "@type": "Service",
-              "name": "Paid Advertising",
-              "url": "https://gr8hook.com/services/#paid-ads"
+              "name": "Marketing & Paid Advertising",
+              "url": "https://gr8hook.com/marketing/"
+            }
+          },
+          {
+            "@type": "Offer",
+            "itemOffered": {
+              "@type": "Service",
+              "name": "Sales & Lead Generation",
+              "url": "https://gr8hook.com/sales/"
+            }
+          },
+          {
+            "@type": "Offer",
+            "itemOffered": {
+              "@type": "Service",
+              "name": "Analytics & Attribution",
+              "url": "https://gr8hook.com/analytics/"
             }
           },
           {
@@ -119,14 +142,6 @@
               "@type": "Service",
               "name": "Print & Design",
               "url": "https://gr8hook.com/services/#design"
-            }
-          },
-          {
-            "@type": "Offer",
-            "itemOffered": {
-              "@type": "Service",
-              "name": "Easy-2-Use Tracking Platform",
-              "url": "https://gr8hook.com/services/#tracking"
             }
           }
         ]
@@ -216,12 +231,13 @@ alt="" /></noscript>
     <nav class="nav" id="site-nav" aria-label="Main">
       <a href="../">Home</a>
       <a href="../about/">About</a>
+      <a href="../marketing/">Marketing</a>
+      <a href="../sales/">Sales</a>
+      <a href="../analytics/">Analytics</a>
       <a href="../services/">Services</a>
-      <a href="../pricing/">Pricing</a>
       <a href="../work/">Work</a>
-      <a href="../dashboard/">Dashboard</a>
       <a href="../contact/" aria-current="page">Contact</a>
-      <a class="btn btn--coral" href="../contact/#book">Book a Call</a>
+      <a class="btn btn--coral" href="../contact/#quote">Get a Quote</a>
     </nav>
   </div>
 </header>
@@ -231,9 +247,9 @@ alt="" /></noscript>
   <section class="section dark">
     <div class="container contact-grid">
       <div>
-        <span class="eyebrow">Talk to us</span>
-        <h1 class="display" style="font-size: clamp(40px, 5.6vw, 76px)">Let's start your <span class="accent">project.</span></h1>
-        <p class="lead">Tell us a little about your business and what you want to grow. We'll get back to you within one business day.</p>
+        <span class="eyebrow">Get a quote</span>
+        <h1 class="display" style="font-size: clamp(40px, 5.6vw, 76px)">Let's set up your <span class="accent">quote.</span></h1>
+        <p class="lead">Tell us about your business and what you want to grow. We'll follow up within one business day with a custom quote, or to ask a few quick questions first.</p>
         <ul class="contact-list">
           <li>
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M22 6l-10 7L2 6"/></svg>
@@ -247,7 +263,7 @@ alt="" /></noscript>
       </div>
 
       <form class="form" id="quote" action="https://formsubmit.co/Admin@gr8hook.com" method="POST">
-        <input type="hidden" name="_subject" value="New inquiry from gr8hook.com">
+        <input type="hidden" name="_subject" value="New quote request from gr8hook.com">
         <input type="hidden" name="_template" value="table">
         <input type="text" name="_honey" style="display:none" tabindex="-1" autocomplete="off" aria-hidden="true">
         <p class="form-note" style="text-align:left;margin:0 0 16px">Fields marked <span class="req" aria-hidden="true">*</span><span class="sr-only">with an asterisk</span> are required.</p>
@@ -272,20 +288,11 @@ alt="" /></noscript>
           </div>
         </div>
         <fieldset class="field">
-          <legend>Interested in a package?</legend>
-          <div class="pkg-pick" data-package-pick>
-            <label><input type="radio" name="package" value="Startup" data-services="ads seo web design tracking"><span><b>Startup</b><small>$1,199/mo</small></span></label>
-            <label><input type="radio" name="package" value="Basic" data-services="ads seo content design tracking"><span><b>Basic</b><small>$1,299/mo</small></span></label>
-            <label class="pkg-pick--pro"><input type="radio" name="package" value="Pro" data-services="ads seo web content design social tracking"><span><b>Pro</b><small>$1,997/mo · Most popular</small></span></label>
-            <label><input type="radio" name="package" value="Elite" data-services="ads seo web content design social email crm tracking"><span><b>Elite</b><small>$3,997/mo</small></span></label>
-            <label class="pkg-pick--none"><input type="radio" name="package" value="Not sure yet" data-services="" checked><span><b>Not sure yet</b><small>Help me choose</small></span></label>
-          </div>
-          <p class="form-note pkg-hint" data-package-hint aria-live="polite"></p>
-        </fieldset>
-        <fieldset class="field">
-          <legend>What can we help with?</legend>
+          <legend>What would you like a quote for?</legend>
           <div class="checks" data-service-checks>
-            <label><input type="checkbox" name="services" value="Paid Ads" data-service="ads"> Paid Ads</label>
+            <label><input type="checkbox" name="services" value="Marketing & Paid Ads" data-service="marketing"> Marketing &amp; Paid Ads</label>
+            <label><input type="checkbox" name="services" value="Sales & Lead Generation" data-service="sales"> Sales &amp; Lead Generation</label>
+            <label><input type="checkbox" name="services" value="Analytics & Attribution" data-service="analytics"> Analytics &amp; Attribution</label>
             <label><input type="checkbox" name="services" value="Social Media" data-service="social"> Social Media</label>
             <label><input type="checkbox" name="services" value="Content Creation" data-service="content"> Content Creation</label>
             <label><input type="checkbox" name="services" value="Web Design" data-service="web"> Web Design</label>
@@ -293,12 +300,11 @@ alt="" /></noscript>
             <label><input type="checkbox" name="services" value="Email & SMS" data-service="email"> Email &amp; SMS</label>
             <label><input type="checkbox" name="services" value="CRM & Automation" data-service="crm"> CRM &amp; Automation</label>
             <label><input type="checkbox" name="services" value="Print & Design" data-service="design"> Print &amp; Design</label>
-            <label><input type="checkbox" name="services" value="Tracking Platform" data-service="tracking"> Tracking Platform</label>
-            <label><input type="checkbox" name="services" value="Consulting" data-service="consulting"> Consulting ($80/hr)</label>
+            <label><input type="checkbox" name="services" value="Consulting" data-service="consulting"> Consulting</label>
           </div>
         </fieldset>
         <div class="field">
-          <label for="budget">Monthly budget</label>
+          <label for="budget">Monthly marketing budget</label>
           <select id="budget" name="budget">
             <option value="">Select a range</option>
             <option>Under $1,000</option>
@@ -311,7 +317,7 @@ alt="" /></noscript>
           <label for="message">Tell us about your goals</label>
           <textarea id="message" name="message"></textarea>
         </div>
-        <button class="btn btn--coral" type="submit">Send Message</button>
+        <button class="btn btn--coral" type="submit">Request My Quote</button>
         <p class="form-note">We never share your information.</p>
       </form>
     </div>
@@ -322,7 +328,7 @@ alt="" /></noscript>
       <span class="eyebrow">Book a call</span>
       <h2 class="h2">Grab a free <span class="accent">strategy call.</span></h2>
       <p class="lead" style="margin: 0 auto 34px">Pick a time that works for you. We'll talk through your goals and where the quickest wins are.</p>
-      <div class="calendly-inline-widget" data-url="https://calendly.com/admin-gr8hook?hide_gdpr_banner=1&amp;primary_color=bf4428" style="max-width: 1000px; min-width: 300px; height: 700px; margin: 0 auto"></div>
+      <div class="calendly-inline-widget" data-url="https://calendly.com/admin-gr8hook?hide_gdpr_banner=1&amp;primary_color=bf4428" style="max-width: 1000px; min-width: 0; height: 700px; margin: 0 auto"></div>
       <script src="https://assets.calendly.com/assets/external/widget.js" async></script>
       <p class="form-note" style="margin-top: 18px">Calendar not loading? <a href="https://calendly.com/admin-gr8hook" target="_blank" rel="noopener">Open the booking page in a new tab</a>.</p>
     </div>
@@ -349,8 +355,6 @@ alt="" /></noscript>
         <ul>
           <li><a href="../about/">About</a></li>
           <li><a href="../work/">Work</a></li>
-          <li><a href="../pricing/">Pricing</a></li>
-          <li><a href="../dashboard/">Client Dashboard</a></li>
           <li><a href="../contact/">Contact</a></li>
           <li><a href="../privacy/">Privacy Policy</a></li>
           <li><a href="../accessibility/">Accessibility</a></li>
@@ -359,11 +363,11 @@ alt="" /></noscript>
       <div>
         <h2 class="ft-h">Services</h2>
         <ul>
-          <li><a href="../services/#paid-ads">Paid Ads</a></li>
-          <li><a href="../services/#social-media">Social Media</a></li>
+          <li><a href="../marketing/">Marketing &amp; Ads</a></li>
+          <li><a href="../sales/">Sales &amp; Lead Generation</a></li>
+          <li><a href="../analytics/">Analytics &amp; Attribution</a></li>
           <li><a href="../services/#web-seo">Web Design &amp; SEO</a></li>
-          <li><a href="../services/#crm">CRM &amp; Automation</a></li>
-          <li><a href="../services/#tracking">Tracking Platform</a></li>
+          <li><a href="../services/">All Services</a></li>
         </ul>
       </div>
       <div>
@@ -371,6 +375,7 @@ alt="" /></noscript>
         <ul>
           <li><a href="mailto:Sales@Gr8Hook.com">Sales@Gr8Hook.com</a></li>
           <li>Michigan Based</li>
+          <li><a href="../contact/#quote">Get a quote</a></li>
           <li><a href="../contact/#book">Book a call</a></li>
         </ul>
       </div>
