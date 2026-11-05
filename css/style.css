@@ -855,3 +855,7 @@ fieldset.field { border: 0; padding: 0; margin: 0 0 18px; }
 .opt-in input { width: 18px; height: 18px; margin-top: 3px; accent-color: var(--coral); flex: none; }
 .form-note a { color: var(--coral-ink); }
 .audit-lead > * { min-width: 0; } .field select { width: 100%; min-width: 0; } .audit-lead .h2 { overflow-wrap: anywhere; }
+.audit-pending { display: flex; align-items: center; gap: 14px; }
+.audit-pending .audit-spinner { width: 26px; height: 26px; border-color: rgba(255,255,255,.15); border-top-color: var(--coral); }
+.audit-empty p { margin: 0 0 12px; }
+.audit-retry { min-height: 44px; }

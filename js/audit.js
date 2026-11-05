@@ -9,6 +9,8 @@
   var form = $('audit-form'), input = $('audit-url'), err = $('audit-error');
   var progress = $('audit-progress'), report = $('audit-report'), lead = $('audit-lead');
   var device = 'mobile', current = null;
+  // Live run state: page checks plus Google's mobile and desktop tests, which arrive separately.
+  var run = null;
 
   var ICONS = {
     pass: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M8 12.5l2.5 2.5L16 9.5"/></svg>',
@@ -34,11 +36,24 @@
       '<b>' + (n === null || n === undefined ? '–' : n) + '</b><span class="g-label">' + label + '</span><span class="g-rating">' + r[1] + '</span></div>';
   }
   function renderGauges() {
+    var sp = run && run.speed[device];
+    if (sp && sp.status === 'pending') {
+      $('gauges').innerHTML = '<div class="audit-empty audit-pending"><span class="audit-spinner" aria-hidden="true"></span><span>Running Google\u2019s ' + device + ' speed test. This can take up to a minute.</span></div>';
+      return;
+    }
+    if (sp && sp.status === 'error') {
+      $('gauges').innerHTML = '<div class="audit-empty"><p>' + esc(sp.error) + ' The checks below still ran.</p><button type="button" class="btn btn--ghost audit-retry" data-retry="' + device + '">Try Google\u2019s ' + device + ' test again</button></div>';
+      return;
+    }
     var s = current[device];
     $('gauges').innerHTML = s
       ? gauge('Performance', s.performance) + gauge('Accessibility', s.accessibility) + gauge('SEO Basics', s.seo) + gauge('Best Practices', s.bestPractices)
-      : '<p class="audit-empty">Google’s ' + device + ' test didn’t finish for this site. The checks below still ran.</p>';
+      : '<p class="audit-empty">Google\u2019s ' + device + ' test didn\u2019t finish for this site. The checks below still ran.</p>';
   }
+  $('gauges').addEventListener('click', function (e) {
+    var b = e.target.closest('[data-retry]');
+    if (b && run) runSpeed(b.getAttribute('data-retry'));
+  });
 
   // ── Findings ──
   function item(c) {
@@ -79,8 +94,7 @@
   });
 
   // ── Run ──
-  var STEPS = ['Loading the page…', 'Testing mobile speed with Google Lighthouse…', 'Testing desktop speed…', 'Checking search basics and sitemap…',
-    'Looking for contact options and forms…', 'Checking for tracking…', 'Putting your report together…'];
+  var STEPS = ['Loading the page…', 'Checking search basics and sitemap…', 'Looking for contact options and forms…', 'Checking for tracking…', 'Putting your report together…'];
   var timer = null;
   function showError(msg) { err.textContent = msg; err.hidden = false; input.setAttribute('aria-invalid', 'true'); input.focus(); }
   function busy(on, site) {
@@ -92,9 +106,40 @@
       var i = 0;
       $('progress-site').textContent = site;
       $('progress-step').textContent = STEPS[0];
-      timer = setInterval(function () { i = Math.min(i + 1, STEPS.length - 1); $('progress-step').textContent = STEPS[i]; }, 6000);
+      timer = setInterval(function () { i = Math.min(i + 1, STEPS.length - 1); $('progress-step').textContent = STEPS[i]; }, 2500);
     }
   }
+  // Combine the page checks with whichever speed tests have finished.
+  function compose() {
+    var m = run.speed.mobile, d = run.speed.desktop, data = Object.assign({}, run.base);
+    data.mobile = m.status === 'done' ? m.data.scores : null;
+    data.desktop = d.status === 'done' ? d.data.scores : null;
+    data.metrics = m.status === 'done' ? m.data.metrics : [];
+    data.lighthouseIssues = m.status === 'done' ? m.data.issues : [];
+    return data;
+  }
+  function refresh() { if (run && run.base) render(compose(), false); }
+  function post(body) {
+    return fetch(ENDPOINT, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) })
+      .then(function (r) { return r.json().then(function (j) { return { ok: r.ok, body: j }; }); });
+  }
+  function runSpeed(strategy) {
+    var mine = run;
+    mine.speed[strategy] = { status: 'pending' };
+    refresh();
+    post({ url: mine.url, strategy: strategy }).then(function (res) {
+      if (mine !== run) return;
+      mine.speed[strategy] = !res.ok || !res.body.scores
+        ? { status: 'error', error: res.body.error || 'Google\u2019s test didn\u2019t finish. Try again in a minute.' }
+        : { status: 'done', data: res.body, token: res.body.token };
+      refresh();
+    }).catch(function () {
+      if (mine !== run) return;
+      mine.speed[strategy] = { status: 'error', error: 'Google\u2019s test couldn\u2019t be reached.' };
+      refresh();
+    });
+  }
+
   form.addEventListener('submit', function (e) {
     e.preventDefault();
     err.hidden = true; input.removeAttribute('aria-invalid');
@@ -103,19 +148,24 @@
     busy(true, host(/^https?:\/\//i.test(url) ? url : 'https://' + url));
     lead.hidden = true;
     $('results').scrollIntoView({ behavior: 'smooth', block: 'start' });
-    fetch(ENDPOINT, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ url: url }) })
-      .then(function (r) { return r.json().then(function (j) { return { ok: r.ok, body: j }; }); })
+    var mine = run = { url: url, base: null, speed: { mobile: { status: 'pending' }, desktop: { status: 'pending' } } };
+    // Google's tests run as their own requests, in parallel with the page checks.
+    runSpeed('mobile'); runSpeed('desktop');
+    post({ url: url })
       .then(function (res) {
+        if (mine !== run) return;
         busy(false);
-        if (!res.ok || res.body.error) return showError(res.body.error || 'Something went wrong. Please try again.');
-        render(res.body, false);
+        if (!res.ok || res.body.error) { run = null; return showError(res.body.error || 'Something went wrong. Please try again.'); }
+        run.base = res.body;
+        refresh();
         lead.hidden = false;
         $('results').focus({ preventScroll: true });
         if (typeof window.fbq === 'function') window.fbq('trackCustom', 'WebsiteAudit');
       })
       .catch(function () {
-        busy(false);
-        showError('We couldn’t run the audit right now. Please try again in a minute, or email Sales@Gr8Hook.com and we’ll run it for you.');
+        if (mine !== run) return;
+        busy(false); run = null;
+        showError('We couldn\u2019t run the audit right now. Please try again in a minute, or email Sales@Gr8Hook.com and we\u2019ll run it for you.');
       });
   });
 
@@ -160,9 +210,10 @@
           mobile_scores: 'Performance ' + s.performance + ' · Accessibility ' + s.accessibility + ' · SEO ' + s.seo + ' · Best practices ' + s.bestPractices,
           issues_found: issues.join('; '), source: [source.utm_source, source.utm_campaign].filter(Boolean).join(' / ') || source.referrer
         })
-      }).then(function (r) { if (!r.ok) throw new Error(); });
+      }).then(function (r) { return r.json(); }).then(function (j) { if (!j || String(j.success) !== 'true') throw new Error(); });
     };
-    var payload = Object.assign({}, v, { concern: v.concern, source: source }, d.token || {});
+    var speed = run ? { mobile: run.speed.mobile.token || null, desktop: run.speed.desktop.token || null } : {};
+    var payload = Object.assign({}, v, { source: source, speed: speed }, (run && run.base && run.base.token) || {});
     fetch(LEAD, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) })
       .then(function (r) { return r.json().then(function (j) { return { ok: r.ok, body: j }; }); })
       .then(function (res) {
@@ -186,9 +237,9 @@
     ],
     lighthouseIssues: [{ title: 'Images are larger than they need to be', category: 'Speed', status: 'fail' }],
     checks: [
-      { group: 'seo', status: 'warn', title: 'Missing page description', detail: 'A meta description wasn’t detected. It’s the summary people read in search results before they click.' },
+      { group: 'seo', status: 'warn', title: 'Missing page description', detail: 'A meta description wasn\u2019t detected. It\u2019s the summary people read in search results before they click.' },
       { group: 'conversion', status: 'warn', title: 'No click-to-call link found', detail: 'On phones, a tappable number is often the fastest way a customer reaches you.' },
-      { group: 'tracking', status: 'warn', title: 'No Google tag detected', detail: 'Without analytics, it’s hard to know where visitors come from or what they do.' },
+      { group: 'tracking', status: 'warn', title: 'No Google tag detected', detail: 'Without analytics, it\u2019s hard to know where visitors come from or what they do.' },
       { group: 'security', status: 'pass', title: 'HTTPS enabled', detail: 'The website uses an encrypted connection.' }
     ],
     notes: ['Sample results for illustration. Run your own audit above.']
