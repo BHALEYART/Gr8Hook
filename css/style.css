@@ -1,4 +1,11 @@
 /* Gr8 Hook — site styles */
+/* Fonts are self-hosted (SIL Open Font License, see assets/fonts/OFL.txt) so the page doesn't wait on Google Fonts. */
+@font-face { font-family: "Manrope"; font-style: normal; font-weight: 400; font-display: swap; src: url("../assets/fonts/manrope-latin-400-normal.woff2") format("woff2"); }
+@font-face { font-family: "Manrope"; font-style: normal; font-weight: 500; font-display: swap; src: url("../assets/fonts/manrope-latin-500-normal.woff2") format("woff2"); }
+@font-face { font-family: "Manrope"; font-style: normal; font-weight: 700; font-display: swap; src: url("../assets/fonts/manrope-latin-700-normal.woff2") format("woff2"); }
+@font-face { font-family: "Sora"; font-style: normal; font-weight: 600; font-display: swap; src: url("../assets/fonts/sora-latin-600-normal.woff2") format("woff2"); }
+@font-face { font-family: "Sora"; font-style: normal; font-weight: 800; font-display: swap; src: url("../assets/fonts/sora-latin-800-normal.woff2") format("woff2"); }
+
 :root {
   --navy: #0F1B2D;
   --navy-2: #16263D;

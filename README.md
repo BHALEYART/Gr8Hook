@@ -52,3 +52,14 @@ Search the project for `[` to find them all:
    - `A` records for `@` → `185.199.108.153`, `185.199.109.153`, `185.199.110.153`, `185.199.111.153`
    - `CNAME` for `www` → `bhaleyart.github.io`
 5. Back in **Settings → Pages**, tick **Enforce HTTPS** once the certificate is issued.
+
+## Editing styles and scripts
+
+Pages load `css/style.min.css` and `js/*.js` with a `?v=` version stamp, and browsers cache them for a year (see `vercel.json`).
+After editing `css/style.css` or anything in `js/`, run:
+
+```
+python3 tools/build_assets.py
+```
+
+It rebuilds `style.min.css` and updates the version stamps on every page, so visitors get the change right away. Fonts are self-hosted in `assets/fonts/` (SIL Open Font License).
