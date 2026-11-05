@@ -246,4 +246,11 @@
     ],
     notes: ['Sample results for illustration. Run your own audit above.']
   }, true);
+
+  // Started from the homepage box (or any link with ?url=): fill it in and run right away.
+  var startUrl = (new URLSearchParams(location.search).get('url') || '').trim();
+  if (startUrl) {
+    input.value = startUrl.slice(0, 300);
+    if (form.requestSubmit) form.requestSubmit(); else form.dispatchEvent(new Event('submit', { cancelable: true }));
+  }
 })();
