@@ -52,7 +52,7 @@
   }
   $('gauges').addEventListener('click', function (e) {
     var b = e.target.closest('[data-retry]');
-    if (b && run) runSpeed(b.getAttribute('data-retry'));
+    if (b && run) runSpeed(b.getAttribute('data-retry'), true);
   });
 
   // ── Findings ──
@@ -121,14 +121,16 @@
   function refresh() { if (run && run.base) render(compose(), false); }
   function post(body) {
     return fetch(ENDPOINT, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) })
-      .then(function (r) { return r.json().then(function (j) { return { ok: r.ok, body: j }; }); });
+      .then(function (r) { return r.json().then(function (j) { return { ok: r.ok, status: r.status, body: j }; }); });
   }
-  function runSpeed(strategy) {
+  function runSpeed(strategy, auto) {
     var mine = run;
     mine.speed[strategy] = { status: 'pending' };
     refresh();
     post({ url: mine.url, strategy: strategy }).then(function (res) {
       if (mine !== run) return;
+      // Google's first run on a site often times out and the second succeeds, so retry once automatically.
+      if ((!res.ok || !res.body.scores) && !auto && res.status !== 400 && res.status !== 429) return runSpeed(strategy, true);
       mine.speed[strategy] = !res.ok || !res.body.scores
         ? { status: 'error', error: res.body.error || 'Google\u2019s test didn\u2019t finish. Try again in a minute.' }
         : { status: 'done', data: res.body, token: res.body.token };
