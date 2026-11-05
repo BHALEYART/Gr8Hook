@@ -4,6 +4,7 @@
   var main = document.getElementById('main');
   var ENDPOINT = main.getAttribute('data-audit-endpoint');
   var LEAD = main.getAttribute('data-lead-endpoint');
+  var LEAD_FALLBACK = main.getAttribute('data-lead-fallback');
   var $ = function (id) { return document.getElementById(id); };
   var form = $('audit-form'), input = $('audit-url'), err = $('audit-error');
   var progress = $('audit-progress'), report = $('audit-report'), lead = $('audit-lead');
@@ -119,34 +120,59 @@
   });
 
   // ── Full report request ──
+  // Where this visit came from, for the lead record.
+  var params = new URLSearchParams(location.search), source = { source: 'website-audit', referrer: document.referrer || '' };
+  ['utm_source', 'utm_medium', 'utm_campaign', 'utm_content', 'utm_term'].forEach(function (k) { if (params.get(k)) source[k] = params.get(k); });
+
   $('lead-form').addEventListener('submit', function (e) {
     e.preventDefault();
     var f = e.target, status = $('lead-status');
-    var name = f.name.value.trim(), email = f.email.value.trim();
-    if (!name || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-      status.textContent = 'Please add your name and a valid email.';
-      (name ? f.email : f.name).focus();
+    var v = {
+      name: f.name.value.trim(), business: f.business.value.trim(), email: f.email.value.trim(), phone: f.phone.value.trim(),
+      concern: f.concern.value, concernDetail: f.concernDetail.value.trim(), marketingOptIn: f.marketingOptIn.checked, fax: f.fax.value
+    };
+    var missing = !v.name ? f.name : !v.business ? f.business : !/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v.email) ? f.email : !v.concern ? f.concern : null;
+    [f.name, f.business, f.email, f.concern].forEach(function (el) { el.removeAttribute('aria-invalid'); });
+    if (missing) {
+      missing.setAttribute('aria-invalid', 'true');
+      status.textContent = 'Please add your name, business, a valid email and your biggest concern.';
+      missing.focus();
       return;
     }
-    var d = current || {}, s = d.mobile || {};
-    var issues = (d.checks || []).filter(function (c) { return c.status === 'fail' || c.status === 'warn'; }).map(function (c) { return c.title; })
-      .concat((d.lighthouseIssues || []).map(function (i) { return i.title; }));
-    var payload = {
-      _subject: 'Website audit lead: ' + host(d.finalUrl || d.url || ''), _template: 'table',
-      name: name, email: email, business: f.business.value.trim(), phone: f.phone.value.trim(),
-      website: d.finalUrl || d.url || '',
-      mobile_scores: 'Performance ' + s.performance + ' · Accessibility ' + s.accessibility + ' · SEO ' + s.seo + ' · Best practices ' + s.bestPractices,
-      issues_found: issues.join('; ')
+    var d = current || {};
+    var btn = f.querySelector('button'); btn.disabled = true; status.textContent = 'Sending your report…';
+    var done = function (msg) {
+      f.reset(); btn.disabled = false; status.textContent = msg;
+      if (typeof window.fbq === 'function') window.fbq('track', 'Lead');
     };
-    var btn = f.querySelector('button'); btn.disabled = true; status.textContent = 'Sending…';
-    fetch(LEAD, { method: 'POST', headers: { 'Content-Type': 'application/json', Accept: 'application/json' }, body: JSON.stringify(payload) })
-      .then(function (r) { if (!r.ok) throw new Error(); return r.json(); })
-      .then(function () {
-        f.reset(); btn.disabled = false;
-        status.textContent = 'Thanks! Your account manager will send your full report within one business day.';
-        if (typeof window.fbq === 'function') window.fbq('track', 'Lead');
+    var fail = function () { btn.disabled = false; status.textContent = 'That didn\u2019t send. Please try again, or email Sales@Gr8Hook.com.'; };
+    // Backup route: send the details to our inbox so the lead isn't lost if the report service isn't available.
+    var fallback = function () {
+      var s = d.mobile || {};
+      var issues = (d.checks || []).filter(function (c) { return c.status === 'fail' || c.status === 'warn'; }).map(function (c) { return c.title; })
+        .concat((d.lighthouseIssues || []).map(function (i) { return i.title; }));
+      return fetch(LEAD_FALLBACK, {
+        method: 'POST', headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+        body: JSON.stringify({
+          _subject: 'Website audit lead: ' + host(d.finalUrl || d.url || ''), _template: 'table',
+          name: v.name, business: v.business, email: v.email, phone: v.phone, concern: f.concern.options[f.concern.selectedIndex].text,
+          details: v.concernDetail, marketing_opt_in: v.marketingOptIn ? 'Yes' : 'No', website: d.finalUrl || d.url || '',
+          mobile_scores: 'Performance ' + s.performance + ' · Accessibility ' + s.accessibility + ' · SEO ' + s.seo + ' · Best practices ' + s.bestPractices,
+          issues_found: issues.join('; '), source: [source.utm_source, source.utm_campaign].filter(Boolean).join(' / ') || source.referrer
+        })
+      }).then(function (r) { if (!r.ok) throw new Error(); });
+    };
+    var payload = Object.assign({}, v, { concern: v.concern, source: source }, d.token || {});
+    fetch(LEAD, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) })
+      .then(function (r) { return r.json().then(function (j) { return { ok: r.ok, body: j }; }); })
+      .then(function (res) {
+        if (res.ok) return done(res.body.emailed
+          ? 'Your report is on its way to ' + v.email + '. Check your inbox in a few minutes.'
+          : 'Thanks! Your account manager will send your full report within one business day.');
+        if (res.body.fallback) return fallback().then(function () { done('Thanks! Your account manager will send your full report within one business day.'); });
+        btn.disabled = false; status.textContent = res.body.error || 'That didn\u2019t send. Please try again.';
       })
-      .catch(function () { btn.disabled = false; status.textContent = 'That didn’t send. Please try again, or email Sales@Gr8Hook.com.'; });
+      .catch(function () { fallback().then(function () { done('Thanks! Your account manager will send your full report within one business day.'); }, fail); });
   });
 
   // ── Sample report shown before the first run ──

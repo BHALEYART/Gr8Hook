@@ -851,3 +851,7 @@ fieldset.field { border: 0; padding: 0; margin: 0 0 18px; }
 .audit-band-inner { display: flex; align-items: center; justify-content: space-between; gap: 32px; flex-wrap: wrap; }
 .audit-band .h2 { font-size: clamp(28px, 3.4vw, 44px); margin-bottom: 10px; }
 .audit-band .lead { color: #B9C3D1; margin: 0; font-size: 18px; }
+.opt-in { display: flex; gap: 10px; align-items: flex-start; margin: 0 0 18px; font-size: 14.5px; color: var(--slate); cursor: pointer; }
+.opt-in input { width: 18px; height: 18px; margin-top: 3px; accent-color: var(--coral); flex: none; }
+.form-note a { color: var(--coral-ink); }
+.audit-lead > * { min-width: 0; } .field select { width: 100%; min-width: 0; } .audit-lead .h2 { overflow-wrap: anywhere; }

@@ -265,7 +265,7 @@ alt="" /></noscript>
   </div>
 </header>
 
-<main id="main" tabindex="-1" data-audit-endpoint="https://app.gr8hook.com/api/site-audit" data-lead-endpoint="https://formsubmit.co/ajax/Admin@gr8hook.com">
+<main id="main" tabindex="-1" data-audit-endpoint="https://app.gr8hook.com/api/site-audit" data-lead-endpoint="https://app.gr8hook.com/api/audit-lead" data-lead-fallback="https://formsubmit.co/ajax/Admin@gr8hook.com">
 
   <section class="hero hero--page dark audit-hero">
     <svg class="hero-mark" viewBox="0 0 100 140" fill="none" aria-hidden="true"><circle cx="50" cy="17" r="10" stroke="#FFFFFF" stroke-width="6"/><circle cx="50" cy="40" r="13" stroke="#FFFFFF" stroke-width="6"/><path d="M50 53 L50 100 A22 22 0 0 1 6 100 L6 80 L17 90" stroke="#FFFFFF" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/></svg>
@@ -314,19 +314,36 @@ alt="" /></noscript>
         <div>
           <span class="eyebrow">Your full report</span>
           <h2 class="h2">Want the full marketing <span class="accent">opportunity report?</span></h2>
-          <p class="lead">Enter your business email and your account manager will send personalized recommendations and next steps for <span id="lead-site">your website</span>. No cost, no obligation.</p>
+          <p class="lead">Get a branded report for <span id="lead-site">your website</span> with what each finding means for your business, how to fix it and where we&rsquo;d start. Free, sent straight to your inbox.</p>
         </div>
         <form class="form" id="lead-form" novalidate>
+          <input type="text" name="fax" style="display:none" tabindex="-1" autocomplete="off" aria-hidden="true">
+          <p class="form-note" style="text-align:left;margin:0 0 16px">Fields marked <span class="req" aria-hidden="true">*</span><span class="sr-only">with an asterisk</span> are required.</p>
           <div class="form-row">
-            <div class="field"><label for="lead-name">Name <span class="req" aria-hidden="true">*</span></label><input id="lead-name" name="name" type="text" autocomplete="name" required></div>
-            <div class="field"><label for="lead-business">Business</label><input id="lead-business" name="business" type="text" autocomplete="organization"></div>
+            <div class="field"><label for="lead-name">Your name <span class="req" aria-hidden="true">*</span></label><input id="lead-name" name="name" type="text" autocomplete="name" required></div>
+            <div class="field"><label for="lead-business">Business name <span class="req" aria-hidden="true">*</span></label><input id="lead-business" name="business" type="text" autocomplete="organization" required></div>
           </div>
           <div class="form-row">
             <div class="field"><label for="lead-email">Business email <span class="req" aria-hidden="true">*</span></label><input id="lead-email" name="email" type="email" autocomplete="email" required></div>
             <div class="field"><label for="lead-phone">Phone</label><input id="lead-phone" name="phone" type="tel" autocomplete="tel"></div>
           </div>
+          <div class="field">
+            <label for="lead-concern">Biggest marketing concern <span class="req" aria-hidden="true">*</span></label>
+            <select id="lead-concern" name="concern" required>
+              <option value="">Choose one</option>
+              <option value="more_customers">Not getting enough leads or customers</option>
+              <option value="ads_roi">Our ads aren't paying off</option>
+              <option value="unknown_results">Not sure what's working</option>
+              <option value="follow_up">Leads aren't turning into sales</option>
+              <option value="google">Not showing up on Google</option>
+              <option value="website">Website is slow or outdated</option>
+              <option value="other">Something else</option>
+            </select>
+          </div>
+          <div class="field"><label for="lead-detail">Anything else we should know?</label><textarea id="lead-detail" name="concernDetail" maxlength="1000" style="min-height:90px"></textarea></div>
+          <label class="opt-in"><input type="checkbox" name="marketingOptIn"> <span>Also send me occasional marketing tips. You can unsubscribe any time.</span></label>
           <button class="btn btn--coral" type="submit">Get My Full Report</button>
-          <p class="form-note" id="lead-status" role="status">We never share your information.</p>
+          <p class="form-note" id="lead-status" role="status">We'll email your report and may follow up about your results. We never sell your information. <a href="../privacy/#audit">Privacy Policy</a></p>
         </form>
       </div>
     </div>
