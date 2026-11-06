@@ -886,3 +886,4 @@ fieldset.field { border: 0; padding: 0; margin: 0 0 18px; }
 .audit-field .audit-metrics { margin-top: 14px; }
 .audit-field p { margin: 0; color: #D5DCE6; }
 .audit-field .metric { background: var(--navy); }
+.audit-explain { margin: 18px 0 0; font-size: 14.5px; color: #B9C3D1; max-width: 900px; }

@@ -23,6 +23,12 @@
     ['speed', 'Speed & experience'], ['seo', 'Search & visibility'], ['conversion', 'Getting in touch'],
     ['tracking', 'Tracking & measurement'], ['access', 'Accessibility & best practices'], ['security', 'Security']
   ];
+  var WHY = {
+    Speed: 'Slower pages lose visitors before they see your offer.',
+    Accessibility: 'Affects visitors using screen readers, zoom or older eyes.',
+    'Best practices': 'Affects reliability, security and trust.',
+    SEO: 'Affects how search engines read and rank the page.'
+  };
   var esc = function (s) { return String(s).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); };
   var host = function (u) { try { return new URL(u).hostname.replace(/^www\./, ''); } catch (e) { return u; } };
 
@@ -76,7 +82,7 @@
     }).join('');
     var speed = (data.lighthouseIssues || []).map(function (i) {
       return { group: { Speed: 'speed', SEO: 'seo', Accessibility: 'access' }[i.category] || 'access', status: i.status, title: i.title,
-        detail: i.category === 'Speed' ? '' : i.category + ' check from Google Lighthouse.' };
+        detail: WHY[i.category] || '' };
     });
     var all = speed.concat(data.checks || []);
     var order = { fail: 0, warn: 1, info: 2, pass: 3 };
@@ -87,6 +93,9 @@
       return '<section class="audit-group"><h3>' + g[1] + ' <span class="audit-count">' + (issues ? issues + ' to fix' : 'Looks good') + '</span></h3><ul>' + items.map(item).join('') + '</ul></section>';
     }).join('');
     $('notes').textContent = (data.notes || []).join(' ');
+    $('findings-device').textContent = data.findingsFrom
+      ? 'The findings below come from Google\u2019s ' + data.findingsFrom + ' test plus our own checks.'
+      : 'Below are our own checks. Google\u2019s detailed findings appear here once its test finishes.';
   }
 
   // ── Toggle ──
@@ -94,7 +103,7 @@
     b.addEventListener('click', function () {
       device = b.getAttribute('data-device');
       document.querySelectorAll('[data-device]').forEach(function (o) { o.setAttribute('aria-pressed', String(o === b)); });
-      if (current) renderGauges();
+      if (run && run.base) refresh(); else if (current) renderGauges();
     });
   });
 
@@ -119,8 +128,12 @@
     var m = run.speed.mobile, d = run.speed.desktop, data = Object.assign({}, run.base);
     data.mobile = m.status === 'done' ? m.data.scores : null;
     data.desktop = d.status === 'done' ? d.data.scores : null;
-    data.metrics = m.status === 'done' && m.data.source !== 'field' ? m.data.metrics : [];
-    data.lighthouseIssues = m.status === 'done' ? m.data.issues : [];
+    // Findings and measurements follow the selected device, falling back to the other one if its test didn't run.
+    var lab = function (x) { return x.status === 'done' && x.data.source !== 'field' && x.data.scores; };
+    var pick = lab(run.speed[device]) ? device : lab(run.speed[device === 'mobile' ? 'desktop' : 'mobile']) ? (device === 'mobile' ? 'desktop' : 'mobile') : null;
+    data.metrics = pick ? run.speed[pick].data.metrics : [];
+    data.lighthouseIssues = pick ? run.speed[pick].data.issues : [];
+    data.findingsFrom = pick;
     return data;
   }
   function refresh() { if (run && run.base) render(compose(), false); }
@@ -237,6 +250,7 @@
   // ── Sample report shown before the first run ──
   render({
     url: 'https://example.com', finalUrl: 'https://example.com/',
+    findingsFrom: 'mobile',
     mobile: { performance: 48, accessibility: 82, seo: 67, bestPractices: 91 },
     desktop: { performance: 79, accessibility: 82, seo: 67, bestPractices: 91 },
     metrics: [
