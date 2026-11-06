@@ -38,11 +38,16 @@
   function renderGauges() {
     var sp = run && run.speed[device];
     if (sp && sp.status === 'pending') {
-      $('gauges').innerHTML = '<div class="audit-empty audit-pending"><span class="audit-spinner" aria-hidden="true"></span><span>Running Google\u2019s ' + device + ' speed test. This can take up to a minute.</span></div>';
+      $('gauges').innerHTML = '<div class="audit-empty audit-pending"><span class="audit-spinner" aria-hidden="true"></span><span>Running Google\u2019s ' + device + ' speed test. Heavier sites can take up to two minutes.</span></div>';
       return;
     }
     if (sp && sp.status === 'error') {
       $('gauges').innerHTML = '<div class="audit-empty"><p>' + esc(sp.error) + ' The checks below still ran.</p><button type="button" class="btn btn--ghost audit-retry" data-retry="' + device + '">Try Google\u2019s ' + device + ' test again</button></div>';
+      return;
+    }
+    if (sp && sp.status === 'done' && sp.data.source === 'field') {
+      $('gauges').innerHTML = '<div class="audit-empty audit-field"><p>Google\u2019s lab test couldn\u2019t run on this site (some sites block automated tests), so here\u2019s how fast it loads for <strong>real ' + device + ' visitors</strong> over the last 28 days.</p><ul class="audit-metrics">' +
+        sp.data.metrics.map(function (m) { return '<li class="metric metric--' + m.status + '"><span>' + esc(m.label.replace(/ \(real \w+ visitors\)/, '')) + '</span><b>' + esc(m.value) + '</b></li>'; }).join('') + '</ul></div>';
       return;
     }
     var s = current[device];
@@ -114,7 +119,7 @@
     var m = run.speed.mobile, d = run.speed.desktop, data = Object.assign({}, run.base);
     data.mobile = m.status === 'done' ? m.data.scores : null;
     data.desktop = d.status === 'done' ? d.data.scores : null;
-    data.metrics = m.status === 'done' ? m.data.metrics : [];
+    data.metrics = m.status === 'done' && m.data.source !== 'field' ? m.data.metrics : [];
     data.lighthouseIssues = m.status === 'done' ? m.data.issues : [];
     return data;
   }
@@ -130,8 +135,9 @@
     post({ url: mine.url, strategy: strategy }).then(function (res) {
       if (mine !== run) return;
       // Google's first run on a site often times out and the second succeeds, so retry once automatically.
-      if ((!res.ok || !res.body.scores) && !auto && res.status !== 400 && res.status !== 429) return runSpeed(strategy, true);
-      mine.speed[strategy] = !res.ok || !res.body.scores
+      var failed = !res.ok || (!res.body.scores && !(res.body.metrics || []).length);
+      if (failed && !auto && res.status !== 400 && res.status !== 429) return runSpeed(strategy, true);
+      mine.speed[strategy] = failed
         ? { status: 'error', error: res.body.error || 'Google\u2019s test didn\u2019t finish. Try again in a minute.' }
         : { status: 'done', data: res.body, token: res.body.token };
       refresh();
